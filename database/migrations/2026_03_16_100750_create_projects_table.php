@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->integer('chef_project_id');
+            $table->integer('chef_project_id')->nullable();
             $table->foreign('chef_project_id')->references('id')->on('users');
             $table->foreignId('workspace_id')->constrained();
             $table->timestamps();

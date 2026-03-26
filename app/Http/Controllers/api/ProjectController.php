@@ -80,4 +80,13 @@ class ProjectController extends Controller
             'message'=>'Project supprimée avec succès',
         ]);
     }
+    // public function tasks(Project $project){
+
+    //     $project->load('task');
+    //     return response()->json([
+    //         'status'=>'success',
+    //         'data'=>$project,
+    //     ]);
+
+    // }
 }

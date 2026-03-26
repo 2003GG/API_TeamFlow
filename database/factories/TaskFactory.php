@@ -25,6 +25,8 @@ class TaskFactory extends Factory
             'description'=>fake()->text(),
             'status'=>fake()->randomElement(['To Do','In Progress','Done']),
             'project_id'=>fake()->numberBetween(0,7),
+             'responsable'=>fake()->numberBetween(0,12),
+            'deadline'=>fake()->dateTime(),
         ];
     }
 }

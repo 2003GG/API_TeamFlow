@@ -17,6 +17,9 @@ return new class extends Migration
             $table->text('description');
             $table->enum('status',['To Do','In Progress','Done']);
             $table->foreignId('project_id')->constrained();
+            $table->integer('responsable')->nullable();
+            $table->foreign('responsable')->references('id')->on('user');
+            $table->date('deadline')->nullable();
             $table->timestamps();
         });
     }
