@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Workspace;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\WorkspaceRequest;
 class WorkspaceController extends Controller
 {
     /**
@@ -23,12 +23,9 @@ class WorkspaceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(WorkspaceRequest $request)
     {
-        $validate=$request->validate([
-            'title'=>'required|string|max:255',
-            'team_name'=>'required|string|max:255',
-        ]);
+        $validate=$request->validated();
         $workspace=Workspace::create($validate);
         return response()->json([
             'status'=>'success',
@@ -52,12 +49,9 @@ class WorkspaceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Workspace $workspace)
+    public function update(WorkspaceRequest $request, Workspace $workspace)
     {
-        $validate=$request->validate([
-            'title'=>'required|string|max:255',
-            'team_name'=>'required|string|max:255',
-        ]);
+        $validate=$request->validated();
         $workspace->update($validate);
         return response()->json([
             'status'=>'success',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -24,19 +25,16 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        $validate=$request->validate([
-            'title'=>'required|string|max:255',
-            'description'=>'required|string',
-            'workspace_id'=>'required|integer|exists:workspaces,id',
-        ]);
+        $validate=$request->validated();
         $project=Project::create($validate);
         return response()->json([
             'status'=>'success',
             'message'=>'Project créée avec succès',
             'data'=>$project,
         ],201);
+
 
     }
 
@@ -80,13 +78,27 @@ class ProjectController extends Controller
             'message'=>'Project supprimée avec succès',
         ]);
     }
-    // public function tasks(Project $project){
-
-    //     $project->load('task');
-    //     return response()->json([
-    //         'status'=>'success',
-    //         'data'=>$project,
-    //     ]);
-
-    // }
+    public function addTask($id,ProjectRequest $request)
+    {
+        $validate=$request->validated();
+        $project=Project::find($id);
+        if($project){
+        $task=$project->tasks()->create($validate);
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Task ajoutée au project avec succès',
+            'data'=>$task,
+        ],201);
+        }
+    }
+    public function showTask($id){
+        $project=Project::find($id);
+        $task=$project->tasks();
+        return response()->json([
+            'status'=>'success',
+            'data'=>$task
+        ]);
+    }
 }
+
+
